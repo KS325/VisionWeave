@@ -11,17 +11,22 @@ class ImageEditor():
         self.imageloader = imageloader
         pass
 
-    def trimming(self, ratio="hakugin", shift=17, save_start=0):
+    def rename(self, save_start):
+        for i, path in tqdm(enumerate(self.img_paths)):
+            img_raw = self.imageloader.load_image(path)
+            self.imageloader.save_image(img_raw, f"{str(save_start + i).zfill(7)}.png")
+        pass
+
+    def trimming(self, ratio, save_start=0, shift=17):
         for i, path in tqdm(enumerate(self.img_paths)):
             img_raw = self.imageloader.load_image(path)
             H, W, _ = img_raw.shape
             # trimm_size = [int(W * np.sqrt(2)), W]
             trimm_size = cal_size([H, W], W, ratio)
             img_trimm = trimm(img_raw, [H, W], trimm_size, shift)
-            self.imageloader.save_image(img_trimm, f"{save_start + i}.png")
+            self.imageloader.save_image(img_trimm, f"{str(save_start + i).zfill(7)}.png")
         print(trimm_size)
-
-        return
+        pass
 
 
 def trimm(img_raw, default_size, trimm_size: list, shift):
