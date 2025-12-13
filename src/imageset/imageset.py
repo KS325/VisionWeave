@@ -7,6 +7,6 @@ class Imageset():
     def __init__(self, ):
         pass
 
-    def make_paths(self, dir_path, extension=".png"):
+    def make_paths(self, dir_path, extension):
         path_list = glob(f"{dir_path}/*{extension}")
         return path_list
